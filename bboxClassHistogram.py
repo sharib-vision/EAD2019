@@ -3,7 +3,7 @@
 """
 Created on Sun Nov 11 12:50:49 2018
 
-@author: shariba
+@author: ead2019
 """        
         
 def read_txt_file(txtfile):
