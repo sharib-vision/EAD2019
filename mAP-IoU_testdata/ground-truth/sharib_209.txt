@@ -1,0 +1,7 @@
+specularity	89.0	112.0	134.0	175.0
+specularity	2.0	152.0	51.0	238.0
+specularity	0.0	238.0	70.0	361.0
+specularity	51.0	438.0	131.0	495.0
+artifact	160.0	3.0	189.0	29.0
+artifact	105.0	293.0	146.0	303.0
+artifact	162.0	232.0	206.0	280.0

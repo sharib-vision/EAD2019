@@ -1,0 +1,5 @@
+specularity	334.0	344.0	363.0	386.0
+specularity	111.0	209.0	226.0	312.0
+specularity	172.0	117.0	198.0	156.0
+specularity	211.0	42.0	250.0	71.0
+specularity	219.0	149.0	261.0	207.0

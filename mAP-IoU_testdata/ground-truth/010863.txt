@@ -1,0 +1,12 @@
+saturation	0.0	38.0	57.0	153.0
+specularity	310.0	116.0	375.0	256.0
+specularity	374.0	376.0	438.0	497.0
+specularity	393.0	126.0	463.0	244.0
+specularity	120.0	176.0	199.0	297.0
+specularity	227.0	169.0	261.0	335.0
+specularity	195.0	32.0	280.0	133.0
+specularity	215.0	415.0	274.0	504.0
+specularity	311.0	295.0	369.0	395.0
+specularity	199.0	358.0	249.0	401.0
+specularity	124.0	437.0	153.0	495.0
+specularity	341.0	438.0	377.0	497.0

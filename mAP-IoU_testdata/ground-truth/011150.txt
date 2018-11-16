@@ -1,0 +1,8 @@
+specularity	112.0	139.0	148.0	220.0
+specularity	9.0	195.0	87.0	253.0
+specularity	134.0	248.0	192.0	390.0
+specularity	76.0	381.0	148.0	440.0
+specularity	350.0	135.0	412.0	263.0
+blur	137.0	63.0	386.0	424.0
+specularity	20.0	322.0	62.0	415.0
+specularity	225.0	319.0	277.0	385.0
