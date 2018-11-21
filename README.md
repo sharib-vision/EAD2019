@@ -17,4 +17,4 @@ Website to [EAD2019-Challenge](https://ead2019.grand-challenge.org/EAD2019)
 
 [github-repo](https://github.com/sharibox/annotationTools)
 
-``we are still testing github-repo for semantic so the code can be messy``
+
