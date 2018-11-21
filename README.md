@@ -12,3 +12,9 @@ Website to [EAD2019-Challenge](https://ead2019.grand-challenge.org/EAD2019)
 
 - [evaluation](https://github.com/sharibox/EAD2019/tree/master/evaluation_mAP-IoU) ``(recent)``
 
+
+#### Semantic segmentation (DICE and Jaccard)
+
+[github-repo](https://github.com/sharibox/annotationTools)
+
+``we are still testing this so the code can be very messy``
