@@ -1,9 +1,9 @@
-#!/usr/bin/env python2
+d#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
 Created on Wed Jun 13 10:52:32 2018
 
-@author: felix and sharib
+@author:  ead2019
 """
 
 def detect_imgs(infolder, ext='.tif'):
