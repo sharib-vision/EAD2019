@@ -3,7 +3,7 @@
 """
 Created on Wed Jun 13 13:41:17 2018
 
-@author: felix and sharib
+@author:  ead2019
 """
 
 def read_json_file(jsonFile):
