@@ -19,4 +19,6 @@ Website to [EAD2019-Challenge](https://ead2019.grand-challenge.org/EAD2019)
 
 - [DICE-JACCARD](https://github.com/sharibox/annotationTools)
 
+ ``Note: For semantic segmentation we use only 5 classes {'Instrument', 'Specularity', 'Artefact' , 'Bubbles' and 'Saturation'}``
+
 
