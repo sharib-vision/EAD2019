@@ -23,7 +23,7 @@ def rectangle(height, width, c0, r0 ):
  Original_images (https://s3.amazonaws.com/semanticsegmentation-v1/semanticSegmentation_EAD2019.zip)
 """
 dataset_dir= '../../via/semanticSegmentation_EAD2019/'
-via_annotationFile = 'sampleJson/via_EAD_Challenge2019_Semantic_v3_MALI_v15.json'
+via_annotationFile = 'sampleJsonFile/via_EAD_Challenge2019_Semantic_v3_MALI_v15.json'
 
 
 # todo: change to the class def
