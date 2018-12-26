@@ -13,7 +13,7 @@ Website to [EAD2019-Challenge](https://ead2019.grand-challenge.org/EAD2019)
 - [evaluation](https://github.com/sharibox/EAD2019/tree/master/evaluation_mAP-IoU) ``(recent)``
 
 
-#### Semantic segmentation 
+#### Semantic segmentation (New)
 
 - [via to mask image converted](https://github.com/sharibox/EAD2019/blob/master/jsonViaAnnotation_maskImage.py)
 
