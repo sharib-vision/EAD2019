@@ -24,8 +24,6 @@ Endoscopic Artefact Detection (EAD) is a core challenge in facilitating diagnosi
 
 #### Semantic segmentation (New)
 
-![img](https://github.com/sharibox/EAD2019/blob/master/imgs/mask_overlayImage.jpg)
-
 <img src="https://github.com/sharibox/EAD2019/blob/master/imgs/mask_overlayImage.jpg">
 
 - [via to mask image converted](https://github.com/sharibox/EAD2019/blob/master/jsonViaAnnotation_maskImage.py)
