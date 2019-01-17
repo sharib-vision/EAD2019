@@ -21,16 +21,23 @@ Endoscopic Artefact Detection (EAD) is a core challenge in facilitating diagnosi
 
 - [detection evaluation: mAP and IoU](https://github.com/sharibox/EAD2019/tree/master/evaluation_mAP-IoU)
 
+#### Artefact detection
+
+- 7 classes for artefact detection. Below shows the distribution of samples in each artefact class. 
+
+![bbox](imgs/bboxclasses.jpg)
+
 
 #### Semantic segmentation (New)
 
-![mask_file](imgs/mask_overlayimage.jpg)
+ - For semantic segmentation we use only 5 classes ``{'Instrument', 'Specularity', 'Artefact' , 'Bubbles' and 'Saturation'}``
+
+    ![mask_file](imgs/mask_overlayimage.jpg)
 
 - [via to mask image converted](https://github.com/sharibox/EAD2019/blob/master/jsonViaAnnotation_maskImage.py)
 
 - [semantic evaluation: DICE-JACCARD](https://github.com/sharibox/EAD2019/tree/master/evaluation_semantic)
 
- ``Note: For semantic segmentation we use only 5 classes {'Instrument', 'Specularity', 'Artefact' , 'Bubbles' and 'Saturation'}``
  
  
 
