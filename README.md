@@ -8,7 +8,7 @@ Endoscopic Artefact Detection (EAD) is a core challenge in facilitating diagnosi
 - Region segmentation: Precise boundary delineation of detected artefacts. 
 - Detection generalization: Detection performance independent of specific data type and source.
 
-Checkout the updates of this challenge here:[EAD2019-Challenge](https://ead2019.grand-challenge.org/EAD2019)
+**Checkout the updates of this challenge here:** [EAD2019-Challenge](https://ead2019.grand-challenge.org/EAD2019)
 
 #### What you will find here?
 
