@@ -121,7 +121,6 @@ if __name__ == '__main__':
     '''
     import json
     import os
-    
     # TODO: Loop this for 
     imageName = file_name_GT.split('/')[-1]
     my_dictionary = {
@@ -153,7 +152,7 @@ if __name__ == '__main__':
     ''' Geting Instance score after semantic scores: keep appending all your scores from your sementation method,
         later you combined with mAP to compute the final score for ==> instance sementation (see here: https://ead2019.grand-challenge.org/Evaluation/),
         we wont compare each pixel category but rather just the mAP values that will assure that the algorithm is atleast aware of artefact classes that are present in the images 
-    ''''
+    '''
     
     fileObj= open(jsonFileName, "a")
     fileObj.write("\n")
