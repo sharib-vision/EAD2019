@@ -19,7 +19,7 @@ import numpy as np
 
 MINOVERLAP = 0.25 # default value 
 
-debug = 1
+debug = 0
 # fetch the folders 
 if debug:
     predictfolder ='../mAP-IoU_testdata/predicted'
