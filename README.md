@@ -25,7 +25,7 @@ Endoscopic Artefact Detection (EAD) is a core challenge in facilitating diagnosi
 
 - [via to mask image converted](https://github.com/sharibox/EAD2019/blob/master/jsonViaAnnotation_maskImage.py)
 
-- [semantic evaluation: DICE-JACCARD](https://github.com/sharibox/annotationTools)
+- [semantic evaluation: DICE-JACCARD](https://github.com/sharibox/EAD2019/tree/master/evaluation_semantic)
 
  ``Note: For semantic segmentation we use only 5 classes {'Instrument', 'Specularity', 'Artefact' , 'Bubbles' and 'Saturation'}``
 
