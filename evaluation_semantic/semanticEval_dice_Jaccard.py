@@ -65,8 +65,9 @@ def get_args():
     
     import argparse
     parser = argparse.ArgumentParser(description="For EAD2019 challenge: semantic segmentation", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--GT_maskImage", type=str, default="./masks/0000600_mask.tif", help="ground truth mask image (5 channel tif image only)")
-    parser.add_argument("--Eval_maskImage", type=str, default="./masks/0000600_mask.tif", help="predicted mask image (5 channel tif image only)")
+    parser.add_argument("--GT_maskImage", type=str, default="../masks/0000600_mask.tif", help="ground truth mask image (5 channel tif image only)")
+    parser.add_argument("--Eval_maskImage", type=str, default="../masks/0000600_mask.tif", help="predicted mask image (5 channel tif image only)")
+    parser.add_argument("--Result_dir", type=str, default="results", help="predicted mask image (5 channel tif image only)")
     args = parser.parse_args()
     
     return args
@@ -113,3 +114,49 @@ if __name__ == '__main__':
         meanDiceVal = np.mean(dice_val)  
         meanJaccard = np.mean(jaccard_val)  
         print('mean dice {} and mean jaccard {}'.format(meanDiceVal, meanJaccard))
+        
+        
+    '''
+    creating json file
+    '''
+    import json
+    import os
+    
+    # TODO: Loop this for 
+    imageName = file_name_GT.split('/')[-1]
+    my_dictionary = {
+        "EADChallenge2019":{
+                "imageFile":{
+                  "value":  (imageName )   
+                },
+                "dice":{
+                 "value":   (meanDiceVal) 
+                },
+                "jaccard":{
+                  "value": (meanJaccard)
+                },
+                "score":{
+                  "value": (0.5*meanDiceVal+0.5*meanJaccard),  
+                }
+                
+            }
+    }      
+    os.makedirs(args.Result_dir, exist_ok=True)
+    jsonFileName=os.path.join(args.Result_dir, 'metrics_semantic.json')
+    
+    #### FIXME: uncomment below lines if you want to delete the existing .json semantic metric file 
+#    try:
+#        os.remove(jsonFileName)
+#    except OSError:
+#        pass
+    
+    ''' Geting Instance score after semantic scores: keep appending all your scores from your sementation method,
+        later you combined with mAP to compute the final score for ==> instance sementation (see here: https://ead2019.grand-challenge.org/Evaluation/),
+        we wont compare each pixel category but rather just the mAP values that will assure that the algorithm is atleast aware of artefact classes that are present in the images 
+    ''''
+    
+    fileObj= open(jsonFileName, "a")
+    fileObj.write("\n")
+    # w+ or a
+    json.dump(my_dictionary, fileObj)
+    fileObj.close()
