@@ -12,13 +12,13 @@ Endoscopic Artefact Detection (EAD) is a core challenge in facilitating diagnosi
 
 #### What you will find here?
 
-- [Annotation file format converters](https://github.com/sharibox/EAD2019/tree/master/fileFormatConverters)
+- [annotation file format converters](https://github.com/sharibox/EAD2019/tree/master/fileFormatConverters)
 
 - [test script](https://github.com/sharibox/EAD2019/tree/master/scripts) 
 
 - [configuring your training images and annotations](https://github.com/sharibox/EAD2019/tree/master/annotationImages_and_labels) 
 
-- [evaluation: mAP and IoU](https://github.com/sharibox/EAD2019/tree/master/evaluation_mAP-IoU)
+- [detection evaluation: mAP and IoU](https://github.com/sharibox/EAD2019/tree/master/evaluation_mAP-IoU)
 
 
 #### Semantic segmentation (New)
