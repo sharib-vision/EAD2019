@@ -1,0 +1,10 @@
+glob2
+numpy
+pillow
+scikit-image
+matplotlib
+jsonschema
+opencv-python
+seaborn
+tifffile
+
