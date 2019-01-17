@@ -4,12 +4,11 @@
 #### About:
 Endoscopic Artefact Detection (EAD) is a core challenge in facilitating diagnosis and treatment of diseases in hollow organs. Precise detection of specific artefacts like pixel saturations, motion blur, specular reflections, bubbles and debris is essential for high-quality frame restoration and is crucial for realising reliable computer-assisted tools for improved patient care. The challenge is sub-divided into three tasks: 
 
-- Multi-class artefact detection: Localization of bounding boxes and class labels for 6 7  artefact classes for given frames.
+- Multi-class artefact detection: Localization of bounding boxes and class labels for 7  artefact classes for given frames.
 - Region segmentation: Precise boundary delineation of detected artefacts. 
 - Detection generalization: Detection performance independent of specific data type and source.
 
-
-Website to [EAD2019-Challenge](https://ead2019.grand-challenge.org/EAD2019)
+Checkout the updates of this challenge here:[EAD2019-Challenge](https://ead2019.grand-challenge.org/EAD2019)
 
 #### What you will find here?
 
