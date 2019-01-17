@@ -3,7 +3,10 @@
 """
 Created on Thu Jan 17 09:19:34 2019
 
-@author: shariba
+@author: EAD2019
+
+run: python setup.py install
+
 """
 
 from os import path
