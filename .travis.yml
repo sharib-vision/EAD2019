@@ -1,0 +1,54 @@
+
+
+# This is a configuration file for tox, used to test
+# EAD2019 
+#
+# By default tox will look for tox.ini, so this file
+# will not conflict with any personal tox setup.
+#
+# You can explicitly use this tox configuration on your
+# own machine (via the -c setting), PROVIDED you have
+# all the relevant versions of Python installed. e.g.
+# specifying a specific target envronment (via -e):
+#
+# $ pip install tox
+# $ tox -c .travis-tox.ini -e py35-nocov
+#
+# Or with test coverage:
+#
+# $ pip install tox coverage
+# $ tox -c .travis-tox.ini -e py35-cover
+#
+# Or to run the pep8/flake8 etc Python coding style checks:
+#
+# $ pip install tox flake8 pydocstyle restructuredtext_lint
+# $ tox -c .travis-tox.ini -e style
+#
+# See the envlist setting for other valid arguments.
+
+
+env:
+  global:
+    - DISPLAY=""
+
+language: python
+
+matrix:
+  include:
+    - python: 3.5
+      env: TOXENV=py35
+    - python: 3.7
+      env: TOXENV=py37
+
+install:
+  - pip install -r requirements.txt
+  - pip install tox
+
+script: tox coverage
+
+after_success:
+  - coverage report
+  - codecov
+
+notifications:
+  email: false
