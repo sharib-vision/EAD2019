@@ -12,10 +12,10 @@ from io import open
 
 here = path.abspath(path.dirname(__file__))
 
-with open(path.join(here, 'requirements.txt'), encoding='utf-8') as fp:
+with open('requirements.txt', encoding='utf-8') as fp:
     requirements = [r.rstrip() for r in fp.readlines() if not r.startswith('#')]
 
-with open(path.join(here, 'README.md'), encoding='utf-8') as fp:
+with open( 'README.md', encoding='utf-8') as fp:
     long_description = fp.read()
 
 setup(
