@@ -10,12 +10,12 @@ from os import path
 from setuptools import setup, find_packages
 from io import open
 
-here = path.abspath(path.dirname(__file__))
+currentPath = path.abspath(path.dirname(__file__))
 
-with open('requirements.txt', encoding='utf-8') as fp:
+with open(path.join(currentPath, 'requirements.txt'), encoding='utf-8') as fp:
     requirements = [r.rstrip() for r in fp.readlines() if not r.startswith('#')]
 
-with open( 'README.md', encoding='utf-8') as fp:
+with open(path.join(currentPath, 'README.md'), encoding='utf-8') as fp:
     long_description = fp.read()
 
 setup(
