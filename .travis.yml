@@ -42,7 +42,7 @@ matrix:
 
 install:
   - pip install -r requirements.txt
-  - pip install tox coverage
+  - pip install tox
 
 script: tox coverage
 
