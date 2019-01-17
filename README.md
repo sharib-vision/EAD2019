@@ -1,4 +1,7 @@
 # EAD2019 Challenge
+[Build](https://travis-ci.org/sharibox/EAD2019.svg?branch=master)
+
+#### About:
 
 Website to [EAD2019-Challenge](https://ead2019.grand-challenge.org/EAD2019)
 
