@@ -1,5 +1,5 @@
 # EAD2019 Challenge
-[Build Status](https://travis-ci.org/sharibox/EAD2019.svg?branch=master)
+![Build Status](https://travis-ci.org/sharibox/EAD2019.svg?branch=master)
 
 #### About:
 
