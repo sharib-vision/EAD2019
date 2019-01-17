@@ -1,6 +1,5 @@
 # EAD2019 Challenge
 ![Build Status](https://travis-ci.org/sharibox/EAD2019.svg?branch=master)
-[![Run Status](https://api.shippable.com/projects/5c408fe786df400800bbfbc4/badge?branch=master)](https://app.shippable.com/github/sharibox/EAD2019/dashboard)
 
 #### About:
 Endoscopic Artefact Detection (EAD) is a core challenge in facilitating diagnosis and treatment of diseases in hollow organs. Precise detection of specific artefacts like pixel saturations, motion blur, specular reflections, bubbles and debris is essential for high-quality frame restoration and is crucial for realising reliable computer-assisted tools for improved patient care. The challenge is sub-divided into three tasks: 
