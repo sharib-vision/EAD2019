@@ -18,6 +18,6 @@ install:
 
 script: 
   - bash scripts/run_evaluation_test.sh
-
+  - python evaluation_semantic/semanticEval_dice_Jaccard.py
 notifications:
   email: false
