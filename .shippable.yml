@@ -1,0 +1,23 @@
+
+
+env:
+  global:
+    - DISPLAY=""
+
+language: python
+
+matrix:
+  include:
+    - python: 3.5
+      env: TOXENV=py35
+    - python: 3.6
+      env: TOXENV=py36
+
+install:
+  - pip install -r requirements.txt
+
+script: 
+  - bash scripts/run_evaluation_test.sh
+  - bash scripts/run_evaluation_semantic_test.sh
+notifications:
+  email: false
