@@ -429,7 +429,7 @@ my_dictionary = {
         }
 }
 
-jsonFileName='../metrics.json'
+jsonFileName=os.path.join(resultsfolder, 'metrics.json')
     
 try:
     os.remove(jsonFileName)
