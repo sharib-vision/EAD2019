@@ -25,7 +25,6 @@ if __name__ == '__main__':
     import cv2
     import os
     from matplotlib import pyplot as plt 
-    
     classTypes =  ['Instrument', 'Specularity', 'Artefact' , 'Bubbles', 'Saturation'] 
     
     args=get_args()
@@ -38,8 +37,10 @@ if __name__ == '__main__':
     for i in range(len(classTypes)):
         y_true = (((y_true_Array[i, :, :])> 0).astype(np.uint8))
         img1, contours, hierarchy = cv2.findContours(y_true, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        cv2.drawContours(img_original, contours, -1, colors[i], 3)
-        
+        if contours !=[]:
+            midVal = int(contours[0].shape[0]/2)
+            cv2.drawContours(img_original, contours, -1, colors[i], 3)
+            cv2.putText(img_original,classTypes[i],(contours[0][midVal][0][0],  contours[0][midVal][0][1]),  cv2.FONT_HERSHEY_SIMPLEX, 1,(255,255,255),2,cv2.LINE_AA)
        
     plt.imshow(img_original[:,:,[2,1,0]])
-    cv2.imwrite(os.path.join(args.Result_dir, 'mask_overlayImage.jpg'), img_original)
+    cv2.imwrite(os.path.join(args.Result_dir, 'mask_overlayimage.jpg'), img_original)
