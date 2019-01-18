@@ -115,9 +115,9 @@ if __name__=="__main__":
     plt.xticks(x, (classnames))
     plt.xticks(rotation=45)
     for i in range(len(classCounter)):
-        a= plt.text(-0.35+i , classCounter[i]+10, s = str(round(label[i],2)), size = 10,color='red', fontweight='bold')
+        plt.text(-0.35+i , classCounter[i]+10, s = str(round(label[i],2)), size = 10,color='red', fontweight='bold')
         
-#    plt.show(a)
+    plt.show()
     
-#    savefig('bboxclasses.png', bbox_inches='tight')
+    fig.savefig('bboxclasses.png', bbox_inches='tight')
     
