@@ -25,7 +25,7 @@ Endoscopic Artefact Detection (EAD) is a core challenge in facilitating diagnosi
 
 - [semantic evaluation: DICE-JACCARD](https://github.com/sharibox/EAD2019/tree/master/evaluation_semantic)
 
-#### Artefact detection
+#### Artefact detection (updated!)
 
 - 7 classes for artefact detection. Below shows the distribution of samples in each artefact class. 
 - Total labeled classes: **17156**
