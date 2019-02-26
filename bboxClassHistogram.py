@@ -61,7 +61,6 @@ if __name__=="__main__":
     classnames=''
     
     if useParsing:
-        
         parser = argparse.ArgumentParser()
         parser.add_argument('-bounding_boxes_folder', action='store', help='please include the full path of the folder with bounding boxes (.txt)', type=str)
         parser.add_argument('-class_lists', action='store', help='class list file (fullpath)', type=str)
@@ -73,18 +72,17 @@ if __name__=="__main__":
         
     else:
         #use you explicit path settings here if you dont want to parse
-        bbox_base_path='/Users/shariba/development/dockerContainers/OpenLabeling/phase_1_annotations/'
-        bbox_subFolder='fused_sharib_felix_bboxes/'
+        bbox_base_path='../all_bbox_test/'
+        bbox_subFolder='bbox_txt/'
         #
-        fileName='00002.txt'
         classFileName='class_list.txt'
-        classtextfile = bbox_base_path+classFileName
-        # read class names in bbox (equivalent to indexes stored in annotation bbox[0-len(bboxes)][0]Oth index)
-        textfile = bbox_base_path+bbox_subFolder+fileName
-        bboxes=read_boxes(textfile)
+        classtextfile = classFileName      
         classnames=read_obj_names(classtextfile)
         annotationImagePaths=bbox_base_path+bbox_subFolder
         if debug:
+            fileName='00002.txt'
+            textfile = bbox_base_path+bbox_subFolder+fileName
+            bboxes=read_boxes(textfile)
             print('box class identified:', bboxes[0][0])
             i =(int)(bboxes[0][0])
             print('corresponding name of the class type:', classnames[i])
@@ -119,5 +117,5 @@ if __name__=="__main__":
         
     plt.show()
     
-    fig.savefig('bboxclasses.png', bbox_inches='tight')
+    fig.savefig('bboxclasses_test.png', bbox_inches='tight')
     
