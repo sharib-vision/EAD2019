@@ -29,7 +29,7 @@ Endoscopic Artefact Detection (EAD) is a core challenge in facilitating diagnosi
 
 - 7 classes for artefact detection. Below shows the distribution of samples in each artefact class. 
 - Total labeled classes: **17156**
-- Labels per classes: **[5511, 1099, 5015, 658, 1532, 2904, 437]**
+- Total labels per class: **[5511, 1099, 5015, 658, 1532, 2904, 437]**
 
 ![bbox](imgs/bboxclasses_train.png)
 
