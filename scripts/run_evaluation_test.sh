@@ -22,12 +22,14 @@ RESULT_FOLDER=$CURRENT_DIR/mAP-IOU_EAD2019_results
 
 mkdir -p $RESULT_FOLDER
 
+JSONFILENAME='metrics_detection.json'
+
 # compute the mAP and IoU (Please note that weighted value will be scored, see challenge website for details, https://ead2019.grand-challenge.org/Evaluation/)
 
 #PARAMETERS=$BASE_FOLDER/compute_mAP_IoU.py \#$DATA_DIR/predicted\#$DATA_DIR/ground-truth\#$RESULT_FOLDER
 #echo $PARAMETERS
 
-python $BASE_FOLDER/compute_mAP_IoU.py $DATA_DIR/predicted $DATA_DIR/ground-truth $RESULT_FOLDER
+python $BASE_FOLDER/compute_mAP_IoU.py $DATA_DIR/predicted $DATA_DIR/ground-truth $RESULT_FOLDER $JSONFILENAME
 
 # grep values from txt file and put it in json file
 
