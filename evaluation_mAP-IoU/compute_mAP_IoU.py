@@ -29,6 +29,7 @@ else:
     predictfolder = sys.argv[1]
     gtfolder = sys.argv[2]
     resultsfolder = sys.argv[3]
+    jsonFileName = sys.argv[4]
 
 """
 Series of helper functions. 
@@ -429,7 +430,7 @@ my_dictionary = {
         }
 }
 
-jsonFileName=os.path.join(resultsfolder, 'metrics.json')
+jsonFileName=os.path.join(resultsfolder, jsonFileName)
     
 try:
     os.remove(jsonFileName)
