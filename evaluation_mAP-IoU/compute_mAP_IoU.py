@@ -418,15 +418,34 @@ my_dictionary = {
     "EADChallenge2019":{
             "mAP":{
              "value":   (mAP*100) 
-
             },
             "IoU":{
               "value":       (mIoU*100)
             },
             "score":{
               "value":      (0.8*mAP*100+0.2*mIoU*100),  
+            },
+            "mAP_specularity": {
+              "value": (ap_dictionary['specularity']*100)
+            },
+            "mAP_contrast": {
+              "value": (ap_dictionary['contrast']*100)
+            },
+            "mAP_saturation": {
+              "value": (ap_dictionary['saturation']*100)
+            },
+            "mAP_blur":{
+              "value": (ap_dictionary['blur']*100)
+            },
+            "mAP_instrument":{
+              "value": (ap_dictionary['instrument']*100)
+            },
+            "mAP_bubbles":{
+              "value": (ap_dictionary['bubbles']*100)
+            },
+            "mAP_artifact":{
+              "value": (ap_dictionary['artifact']*100)
             }
-            
         }
 }
 
