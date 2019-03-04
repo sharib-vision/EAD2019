@@ -66,6 +66,7 @@ if __name__ == '__main__':
             score_d = valAppend[2]['value']*0.01
                 
         if valArgs.caseType == 1 or valArgs.caseType == 3:
+#            Detection has been removed from final submission for semantic
             # first read the json file for detection
 #            data = read_json(valArgs.semantic_detection)
 #            valAppend = []
@@ -80,7 +81,7 @@ if __name__ == '__main__':
                 valAppend_Semantic.append(p)
                 
             # compute scores
-            finalScore = 0.75*valAppend_Semantic[3]['value'] + 0.25*valAppend_Semantic[2]['value']*0.01
+            finalScore = 0.75*valAppend_Semantic[3]['value'] + 0.25*valAppend_Semantic[2]['value']
             scoreSemantic = valAppend_Semantic[3]['value']
             if debug:
                 print ('overall score for instance segmentation for EAD2019 challenge is:', finalScore)
@@ -90,7 +91,7 @@ if __name__ == '__main__':
                 print('mean semantic score alone:', scoreSemantic)
                 print('~~~~~~~~~~~~~~~~~~~~~~E.O.F~~~~~~~~~~~~~~~~~~~~~~~~~~~')
             
-            F2_score = valAppend[2]['value']*0.01
+            F2_score = valAppend_Semantic[2]['value']
             overlap = scoreSemantic
             semScore = finalScore
             
