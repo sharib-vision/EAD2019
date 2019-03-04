@@ -124,7 +124,7 @@ def file_lines_to_list(path):
 """
 tmp_files_path = "tmp_files"
 if not os.path.exists(tmp_files_path): # if it doesn't exist already
-  os.makedirs(tmp_files_path)
+  os.makedirs(tmp_files_path, exist_ok=True)
   
 #if resultsfolder is not None:
 results_files_path = resultsfolder
@@ -133,7 +133,7 @@ results_files_path = resultsfolder
 # if os.path.exists(results_files_path): # if it exist already
 #   # reset the results directory
 #   shutil.rmtree(results_files_path)
-os.makedirs(results_files_path)
+os.makedirs(results_files_path, exist_ok=True)
 
 
 """
@@ -414,6 +414,8 @@ import os
 
 # TODO: include class-wise map and IoU
 # Note this is only for detection method of the challenge.
+# Please comment this!!!! as this example did not have instrument detection we have to keep this value
+ap_dictionary['instrument'] = 0
 my_dictionary = {
     "EADChallenge2019":{
             "mAP":{
