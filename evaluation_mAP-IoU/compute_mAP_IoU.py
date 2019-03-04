@@ -130,9 +130,9 @@ if not os.path.exists(tmp_files_path): # if it doesn't exist already
 results_files_path = resultsfolder
 #else:
 #    results_files_path = "results"
-if os.path.exists(results_files_path): # if it exist already
-  # reset the results directory
-  shutil.rmtree(results_files_path)
+# if os.path.exists(results_files_path): # if it exist already
+#   # reset the results directory
+#   shutil.rmtree(results_files_path)
 os.makedirs(results_files_path)
 
 
@@ -350,7 +350,7 @@ with open(os.path.join(results_files_path, "results.txt"), 'w') as results_file:
   results_file.write(textiou + "\n")
 
 # remove the tmp_files directory
-shutil.rmtree(tmp_files_path)
+#shutil.rmtree(tmp_files_path)
 
 """
  Count total of Predictions
