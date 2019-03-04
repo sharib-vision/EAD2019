@@ -1,5 +1,4 @@
 FROM continuumio/miniconda3
-
 MAINTAINER Sharib Ali<sharib.ali@eng.ox.ac.uk> 
 
 RUN conda create -n env python=3.6 numpy
@@ -25,11 +24,11 @@ RUN mkdir -p /home/ead2019/app
 WORKDIR /home/ead2019/app
 
 # add all evaluation and groundTruth directories
-ADD evaluation_EAD2019_allFiles evaluation_EAD2019_allFiles/ 
-ADD groundTruths_EAD2019 groundTruths_EAD2019/
+COPY evaluation_EAD2019_allFiles evaluation_EAD2019_allFiles/ 
+COPY groundTruths_EAD2019 groundTruths_EAD2019/
 
 # add run script
-ADD run_script.sh run_script.sh
+COPY run_script.sh run_script.sh
 
 RUN [ "/bin/bash", "-c", "source activate env"]
 
