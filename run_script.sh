@@ -89,11 +89,11 @@ do
 
 # it can be either both semantic and detection
     elif [ $numfiles == 2 ]; then
-        for imageFile in `ls $RESULT_FOLDER/ |grep '.json'`;do
+        for jsonFile in `ls $RESULT_FOLDER/ |grep '.json'`;do
             IFS='_' read -r -a array <<< "$jsonFile"
         done
 
-        if [ "${jsonFile[1]}" == 'sem' ]; then
+        if [ "${array[1]}" == 'sem.json' ]; then
             python $BASE_DIR/evaluation_EAD2019_allFiles/overallEvaluations.py \
             --detectionMetric $RESULT_FOLDER/metrics_det.json \
             --semanticMetric  $RESULT_FOLDER/metrics_sem.json \
@@ -101,7 +101,7 @@ do
             --Result_dir  ${RESULT_FOLDER_FINAL} \
             --jsonFileName metrics.json
 
-        elif [ "${jsonFile[1]}" == 'gen' ]; then
+        elif [ "${array[1]}" == 'gen.json' ]; then
             # detection and generalization
             python $BASE_DIR/evaluation_EAD2019_allFiles/compute_score_g.py \
             --detectionMetric $RESULT_FOLDER/metrics_det.json \
@@ -118,16 +118,18 @@ do
         fi
 # it can be either generalization or detection
     elif [ $numfiles == 1 ]; then
-        for imageFile in `ls $RESULT_FOLDER/ |grep '.json'`;do
+        for jsonFile in `ls $RESULT_FOLDER/ |grep '.json'`;do
             IFS='_' read -r -a array <<< "$jsonFile"
+            echo ${array[1]}
         done
-        if [ "${jsonFile[1]}" == 'sem' ]; then
+        if [ "${array[1]}" == 'sem.json' ]; then
             python $BASE_DIR/evaluation_EAD2019_allFiles/overallEvaluations.py \
             --semanticMetric  $RESULT_FOLDER/metrics_sem.json \
             --caseType 1\
             --Result_dir  ${RESULT_FOLDER_FINAL} \
             --jsonFileName metrics.json
-        elif [ "${jsonFile[1]}" == 'det' ]; then
+        elif [ "${array[1]}" == 'det.json' ]; then
+            echo "detected file is"${jsonFile[1]}
             python $BASE_DIR/evaluation_EAD2019_allFiles/overallEvaluations.py \
             --detectionMetric $RESULT_FOLDER/metrics_det.json\
             --caseType 0\
