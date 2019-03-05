@@ -45,28 +45,19 @@ do
     # DETECTION
     if [ "$DIR" == "detection_bbox" ]; then
         echo "detection detected"
-        python $BASE_DIR/evaluation_EAD2019_allFiles/compute_mAP_IoU.py  $MYDIR/detection_bbox $BASE_DIR/groundTruths_EAD2019/detection_bbox $RESULT_FOLDER metrics_detection.json
-
+        python $BASE_DIR/evaluation_EAD2019_allFiles/compute_mAP_IoU.py  $MYDIR/detection_bbox $BASE_DIR/groundTruths_EAD2019/detection_bbox $RESULT_FOLDER metrics_det.json
+    fi
     # SEMANTIC
-    elif [ "$DIR" == "semantic_masks" ]; then
+    if [ "$DIR" == "semantic_masks" ]; then
         echo "semantic detected"
         # TODO!!!: make a function to estimate average dice and jaccard over all images
-        python $BASE_DIR/evaluation_EAD2019_allFiles/semanticEval_dice_Jaccard_Overall.py --GT_maskDIR $MYDIR/semantic_masks/ --Eval_maskDIR $BASE_DIR/groundTruths_EAD2019/semantic_masks/ --Result_dir $RESULT_FOLDER --jsonFileName metrics_semantic_overlap.json
-
-    elif [ "$DIR" == "semantic_bbox" ]; then
-        echo "semantic detected and computing bbox"
-        # compute mAP for semantic
-        python $BASE_DIR/evaluation_EAD2019_allFiles/compute_mAP_IoU.py $MYDIR/semantic_bbox $BASE_DIR/groundTruths_EAD2019/semantic_bbox $RESULT_FOLDER metrics_semantic_mAP.json
-
-
-    # GENERALIZATION
-    elif [ "$DIR" == "generalization_bbox" ]; then
-        echo "generalization detected"
-        python $BASE_DIR/evaluation_EAD2019_allFiles/compute_mAP_IoU.py  $MYDIR/generalization_bbox $BASE_DIR/groundTruths_EAD2019/generalization_bbox $RESULT_FOLDER  metrics_generalization_mAP.json
-    else
-        echo "see the file conventions or contact EAD2019 team"
+        python $BASE_DIR/evaluation_EAD2019_allFiles/semanticEval_dice_Jaccard_Overall.py --GT_maskDIR $MYDIR/semantic_masks/ --Eval_maskDIR $BASE_DIR/groundTruths_EAD2019/semantic_masks/ --Result_dir $RESULT_FOLDER --jsonFileName metrics_sem.json
     fi
-
+    # GENERALIZATION
+    if [ "$DIR" == "generalization_bbox" ]; then
+        echo "generalization detected"
+        python $BASE_DIR/evaluation_EAD2019_allFiles/compute_mAP_IoU.py  $MYDIR/generalization_bbox $BASE_DIR/groundTruths_EAD2019/generalization_bbox $RESULT_FOLDER  metrics_gen.json
+    fi
 done
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -80,37 +71,51 @@ RESULT_FOLDER_FINAL='/output'
 
 #[[ $numfiles -eq 0 ]] && echo "computing final metric did not happen!!!" && exit 1
 
-
 for DIR in $RESULT_FOLDER
 do
-    if [ $numfiles == 4 ]; then
+# all
+    if [ $numfiles == 3 ]; then
+        # first find the generalization score
+         python $BASE_DIR/evaluation_EAD2019_allFiles/compute_score_g.py \
+            --detectionMetric $RESULT_FOLDER/metrics_det.json \
+            --generalizationMetric $RESULT_FOLDER/metrics_gen.json\
+            --Result_dir $RESULT_FOLDER \
+            --jsonFileName metric_gen_score.json
+
         python $BASE_DIR/evaluation_EAD2019_allFiles/overallEvaluations.py \
-            --detectionMetric $RESULT_FOLDER/metrics_detection.json \
-            --generalizationMetric $RESULT_FOLDER/metrics_generalization_mAP.json\
-            --semantic_detection $RESULT_FOLDER/metrics_semantic_mAP.json\
-            --semanticMetric  $RESULT_FOLDER/metrics_semantic_overlap.json \
+            --detectionMetric $RESULT_FOLDER/metrics_det.json \
+            --generalizationMetric $RESULT_FOLDER/metric_gen_score.json\
+            --semanticMetric  $RESULT_FOLDER/metrics_sem.json \
             --caseType 3\
             --Result_dir  ${RESULT_FOLDER_FINAL}\
             --jsonFileName metrics.json
 
-# it can be either both generalization and detection or semantic only
+# it can be either both semantic and detection
     elif [ $numfiles == 2 ]; then
         for imageFile in `ls $RESULT_FOLDER/ |grep '.json'`;do
             IFS='_' read -r -a array <<< "$jsonFile"
         done
 
-        if [ "${jsonFile[1]}" == 'semantic' ]; then
+        if [ "${jsonFile[1]}" == 'sem' ]; then
             python $BASE_DIR/evaluation_EAD2019_allFiles/overallEvaluations.py \
-            --semantic_detection $RESULT_FOLDER/metrics_semantic_mAP.json\
-            --semanticMetric  $RESULT_FOLDER/metrics_semantic_overlap.json \
-            --caseType 1\
+            --detectionMetric $RESULT_FOLDER/metrics_det.json \
+            --semanticMetric  $RESULT_FOLDER/metrics_sem.json \
+            --caseType 5\
             --Result_dir  ${RESULT_FOLDER_FINAL} \
             --jsonFileName metrics.json
-        else
+
+        elif [ "${jsonFile[1]}" == 'gen' ]; then
+            # detection and generalization
+            python $BASE_DIR/evaluation_EAD2019_allFiles/compute_score_g.py \
+            --detectionMetric $RESULT_FOLDER/metrics_det.json \
+            --generalizationMetric $RESULT_FOLDER/metrics_gen.json\
+            --Result_dir $RESULT_FOLDER \
+            --jsonFileName metric_gen_score.json
+
             python $BASE_DIR/evaluation_EAD2019_allFiles/overallEvaluations.py \
-            --detectionMetric $RESULT_FOLDER/metrics_detection.json \
-            --generalizationMetric $RESULT_FOLDER/metrics_generalization_mAP.json\
-            --caseType 2\
+            --generalizationMetric $RESULT_FOLDER/metric_gen_score.json\
+            --detectionMetric $RESULT_FOLDER/metrics_det.json \
+            --caseType 4\
             --Result_dir  ${RESULT_FOLDER_FINAL}\
             --jsonFileName metrics.json
         fi
@@ -119,16 +124,16 @@ do
         for imageFile in `ls $RESULT_FOLDER/ |grep '.json'`;do
             IFS='_' read -r -a array <<< "$jsonFile"
         done
-        if [ "${jsonFile[1]}" == 'detection' ]; then
+        if [ "${jsonFile[1]}" == 'sem' ]; then
             python $BASE_DIR/evaluation_EAD2019_allFiles/overallEvaluations.py \
-            --detectionMetric $RESULT_FOLDER/metrics_detection.json \
-            --caseType 0\
-            --Result_dir  $RESULT_FOLDER_FINAL\
+            --semanticMetric  $RESULT_FOLDER/metrics_sem.json \
+            --caseType 1\
+            --Result_dir  ${RESULT_FOLDER_FINAL} \
             --jsonFileName metrics.json
         else
             python $BASE_DIR/evaluation_EAD2019_allFiles/overallEvaluations.py \
-            --generalizationMetric $RESULT_FOLDER/metrics_generalization_mAP.json\
-            --caseType 4\
+            --detectionMetric $RESULT_FOLDER/metrics_det.json\
+            --caseType 0\
             --Result_dir  $RESULT_FOLDER_FINAL\
             --jsonFileName metrics.json
         fi
