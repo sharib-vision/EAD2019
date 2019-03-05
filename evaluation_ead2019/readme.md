@@ -10,7 +10,7 @@
 		- semantic_masks
 
   
-  - detection bbox/generalization bbox  - VOC format in  **.txt**
+- detection bbox/generalization bbox  - VOC format in  **.txt**
   
   	`` <class_name> <confidence> <x1> <y1> <x2> <y2> ``
   		
@@ -22,7 +22,7 @@
   	- If you have a YOLO format (.txt) please convert to VOC format
   		- check our "scripts/run_yolo2voc.py"
   
-  - semantic masks
+- semantic masks
   	- **.tif** file with 5 channels
   		
 	``<channel 1: Instrument> <channel 2: Specularity> <channel 3 Artefact> <channel 4: Bubbles> <channel 5: Saturation>``
