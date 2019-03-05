@@ -20,7 +20,7 @@
   	Tips:
   		
   		- If you have a YOLO format (.txt) please convert to VOC format
-  			- check our "yolo2voc_converter.py"
+  			- check our "scripts/run_yolo2voc.py"
   
   - semantic masks
   	- **.tif** file with 5 channels
