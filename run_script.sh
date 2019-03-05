@@ -1,5 +1,13 @@
 #!/bin/bash
-
+#=========================================================================
+#
+# Project:   EAD2019 challenge
+# Language:  bash
+# Begin:     2019-03-05
+#
+# Author: Sharib Ali
+# Responsible person: Sharib Ali <sharib.ali@eng.ox.ac.uk>
+#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #           FILES USED
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -7,28 +15,20 @@
 # evaluation_semantic/semanticEval_dice_Jaccard_Overall.py
 # overallEvaluations.py
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #           FILE   STRUCTURE TO BE LOADED
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #   - ead2019_testSubmission.zip
 #       - detection_bbox
-#       - semantic_bbox
 #       - semantic_masks
 #       - generalization_bbox
 # Please note: for semantic you will need to upload both semantic_bbox and semantic_masks (single folder is not accepted!)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 BASE_DIR=/home/ead2019/app
-
-# input for the uploaded files
-# uncomment this for test
-#INPUT_FILES=/home/ead2019/input
 INPUT_FILES='/input'
-
-# assuming this is unzipped
 MYDIR=$INPUT_FILES
-#unzip ${INPUT_FILES}/ead2019_testSubmission.zip -d $INPUT_FILES/ead2019_testSubmission
 
 # count number of directories
 shopt -s nullglob
@@ -61,16 +61,13 @@ do
 done
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#                                        COMPUTE THE FINAL METRICS.JSON for leaderboard
+#            COMPUTE THE FINAL METRICS.JSON for leaderboard
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 shopt -s nullglob
 numfiles=($RESULT_FOLDER/*json)
 numfiles=${#numfiles[@]}
 echo "COMPUTING FINAL METRICS....identified json files $numfiles"
 RESULT_FOLDER_FINAL='/output'
-
-#[[ $numfiles -eq 0 ]] && echo "computing final metric did not happen!!!" && exit 1
-
 for DIR in $RESULT_FOLDER
 do
 # all
@@ -130,12 +127,14 @@ do
             --caseType 1\
             --Result_dir  ${RESULT_FOLDER_FINAL} \
             --jsonFileName metrics.json
-        else
+        elif [ "${jsonFile[1]}" == 'det' ]; then
             python $BASE_DIR/evaluation_EAD2019_allFiles/overallEvaluations.py \
             --detectionMetric $RESULT_FOLDER/metrics_det.json\
             --caseType 0\
             --Result_dir  $RESULT_FOLDER_FINAL\
             --jsonFileName metrics.json
+        else
+        echo "provied file is generalization which requires both detection and generaliz...."
         fi
     fi
 done
