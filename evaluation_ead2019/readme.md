@@ -3,28 +3,29 @@
 
 ### Submission Styles
 
-	- ead2019_testSubmission.zip
+- ead2019_testSubmission.zip
+
 		- detection_bbox
 		- generalization_bbox
 		- semantic_masks
-	
+
   
-  - detection bbox/generalization bbox  	- VOC format in  **.txt**
+  - detection bbox/generalization bbox  - VOC format in  **.txt**
   
-  		`` <class_name> <confidence> <x1> <y1> <x2> <y2> ``
+  	`` <class_name> <confidence> <x1> <y1> <x2> <y2> ``
   		
-  		example1: specularity	0.92 268 414 292 438
-  		example2: artifact	0.98 219 182 243 207
-  		
+  	example1: specularity	0.92 268 414 292 438
+  	example2: artifact	0.98 219 182 243 207
   		
   	Tips:
   		
-  		- If you have a YOLO format (.txt) please convert to VOC format
-  			- check our "scripts/run_yolo2voc.py"
+  	- If you have a YOLO format (.txt) please convert to VOC format
+  		- check our "scripts/run_yolo2voc.py"
   
   - semantic masks
   	- **.tif** file with 5 channels
-  		``<channel 1: Instrument> <channel 2: Specularity> <channel 3 Artefact> <channel 4: Bubbles> <channel 5: Saturation>``
+  		
+	``<channel 1: Instrument> <channel 2: Specularity> <channel 3 Artefact> <channel 4: Bubbles> <channel 5: Saturation>``
   		
   	- <span style="color:red"> semantic bbox detection criteria has been removed. Now, the participants will be scored only on their semantic segmentation </span>
 
