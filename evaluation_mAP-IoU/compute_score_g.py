@@ -42,6 +42,8 @@ def read_json(jsonFile):
 if __name__ == '__main__':
     import os
     import numpy as np
+
+#    deviation = computeDeviation(0.35, 0.35, 5)
     
     valArgs = get_args()
     exists_detect = os.path.isfile(valArgs.detectionMetric)
@@ -60,8 +62,8 @@ if __name__ == '__main__':
         mAP_d=valAppend_det[0]['value']*0.01
         mAP_g=valAppend_gen[0]['value']*0.01
         # tolerance limit of 10% is provided
-        tol_limit = 10
-        for i in range (0, 5):
+        tol_limit = 5
+        for i in range (1, 8):
             deviation = computeDeviation(valAppend_det[i+2]['value']*0.01, valAppend_gen[i+2]['value']*0.01, tol_limit)
             perClassDeviation.append(deviation)
             
