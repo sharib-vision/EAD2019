@@ -30,6 +30,7 @@ def calculate_iou(confusion_matrix):
         true_positives = confusion_matrix[index, index]
         false_positives = confusion_matrix[:, index].sum() - true_positives
         false_negatives = confusion_matrix[index, :].sum() - true_positives
+        
         denom = true_positives + false_positives + false_negatives
         denom_f2 = (5*true_positives + false_positives + 4*false_negatives)
         
@@ -90,33 +91,48 @@ if __name__ == '__main__':
     classTypes=['Instrument', 'Specularity', 'Artefact' , 'Bubbles', 'Saturation'] 
     args=get_args()
     ext=['*.tif']
+    
+    storeDicePerImage = []
+    storeJaccardPerImage = []
+    storef2ScorePerImage = []
+    
     for filename in sorted(glob.glob(args.GT_maskDIR +ext[0], recursive = True)):
         file_name_GT = args.GT_maskDIR+filename.split('/')[-1]
         file_name_eval_maskImage = args.Eval_maskDIR+filename.split('/')[-1] 
         y_true_Array = tiff.imread(file_name_GT)
         y_pred_Array = tiff.imread(file_name_eval_maskImage)
-        confusion_matrix = calculate_confusion_matrix_from_arrays(y_pred_Array, y_true_Array, 5)
-        dice_= calculate_dice(confusion_matrix)
+        
         if y_true_Array.shape[0]!=5 or y_pred_Array.shape[0] !=5:
             print('the number of channels in each of GT and predicted mask must be 5, nothing done!!!')
         else:
             dice_val =[]
             jaccard_val=[]
+            f2_val = []
             for i in range(len(classTypes)):
                 y_true = (((y_true_Array[i, :, :])> 0).astype(np.uint8))
                 y_pred = (((y_pred_Array[i, :, :])> 0).astype(np.uint8))
                 result_dice = [dice(y_true.flatten(), y_pred.flatten())]
                 result_jaccard = [jaccard(y_true.flatten(), y_pred.flatten())]
                 #
+                confusion_matrix = calculate_confusion_matrix_from_arrays(y_true, y_pred, 2)
+                dice_= calculate_dice(confusion_matrix)
+                _, f2_score=calculate_iou(confusion_matrix)   
+                
                 dice_val.append(result_dice)
                 jaccard_val.append(result_jaccard)
+                f2_val.append(f2_score)
+                
+            storeDicePerImage.append(np.mean(dice_val))
+            storeJaccardPerImage.append(np.mean(jaccard_val))
+            storef2ScorePerImage.append(np.mean(f2_val))
          
-        _, f2_score=calculate_iou(confusion_matrix)   
-#        print('diceval {}'.format(dice_val))
-    #    get mean values
-        meanDiceVal = np.mean(dice_val)  
-        meanJaccard = np.mean(jaccard_val)  
-        mean_f2_score = np.mean(f2_score)  
+        
+# print('diceval {}'.format(dice_val))
+    meanDiceVal = np.mean(storeDicePerImage)  
+    meanJaccard = np.mean(storeJaccardPerImage)  
+    mean_f2_score = np.mean(storef2ScorePerImage) 
+    
+    
 #        print('mean dice {} and mean jaccard {} and F2-score{}'.format(meanDiceVal, meanJaccard, mean_f2_score))
     '''
     creating json file
