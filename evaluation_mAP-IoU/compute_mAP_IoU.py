@@ -24,7 +24,11 @@ debug = 0
 if debug:
     predictfolder ='../mAP-IoU_testdata/predicted'
     gtfolder ='../mAP-IoU_testdata/ground-truth'
+    
+    predictfolder ='../detection_bbox/detection_bbox'
+    gtfolder ='../groundTruths_EAD2019/detection_bbox'
     resultsfolder ='../mAP-IoU_testdata/results'
+    jsonFileName = 'detection_test_emptyPredictions.json'
 else:    
     predictfolder = sys.argv[1]
     gtfolder = sys.argv[2]
@@ -213,18 +217,21 @@ for class_index, class_name in enumerate(gt_classes):
 #        error_msg += "(You can avoid this error message by running extra/intersect-gt-and-pred.py)"
         error(error_msg)
     lines = file_lines_to_list(txt_file)
-    for line in lines:
-      try:
-        tmp_class_name, confidence, left, top, right, bottom = line.split()
-      except ValueError:
-        error_msg = "Error: File " + txt_file + " in the wrong format.\n"
-        error_msg += " Expected: <class_name> <confidence> <left> <top> <right> <bottom>\n"
-        error_msg += " Received: " + line
-        error(error_msg)
-      if tmp_class_name == class_name:
-        #print("match")
-        bbox = left + " " + top + " " + right + " " +bottom
-        bounding_boxes.append({"confidence":confidence, "file_id":file_id, "bbox":bbox})
+    if lines==[]:
+          continue
+    else:
+        for line in lines:
+          try:
+            tmp_class_name, confidence, left, top, right, bottom = line.split()
+          except ValueError:
+            error_msg = "Error: File " + txt_file + " in the wrong format.\n"
+            error_msg += " Expected: <class_name> <confidence> <left> <top> <right> <bottom>\n"
+            error_msg += " Received: " + line
+            error(error_msg)
+          if tmp_class_name == class_name:
+            #print("match")
+            bbox = left + " " + top + " " + right + " " +bottom
+            bounding_boxes.append({"confidence":confidence, "file_id":file_id, "bbox":bbox})
         #print(bounding_boxes)
   # sort predictions by decreasing confidence
   bounding_boxes.sort(key=lambda x:x['confidence'], reverse=True)
@@ -238,7 +245,7 @@ sum_AP = 0.0
 ap_dictionary = {}
 sum_iou = 0.0
 iou_dictionary = {}
-
+ap_dictionary['instrument'] = 0
 # open file to store the results
 with open(os.path.join(results_files_path, "results.txt"), 'w') as results_file:
   results_file.write("# AP and precision/recall per class\n")
@@ -415,7 +422,6 @@ import os
 # TODO: include class-wise map and IoU
 # Note this is only for detection method of the challenge.
 # Please comment this!!!! as this example did not have instrument detection we have to keep this value
-ap_dictionary['instrument'] = 0
 my_dictionary = {
     "EADChallenge2019":{
             "mAP":{
