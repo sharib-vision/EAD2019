@@ -41,9 +41,11 @@
 ### Evaluation Scoring
 
 1. **Endoscopic Artefact Detection**
-	- Final score: 0.8 * mAP + 0.2 * IOU
+	- Final score: 0.6 * mAP + 0.4 * IOU
 2. **Generalization of Artefact Detection**
 	- Deviation score per class above or below tolerance (+/-5%) will be reported
+	
+	**Highest mAP with lowest deviation score will be declared winner of this sub-challenge***
 
 	*For example: Lets say tolerance is 10%, then if your algorithm in detection gives an mAP/class of 30% then your generalization should be with in the tolerance range, i.e., 27%<=mAP/class<=33%, in this scenario your deviation will be zero. However, anything below or above will be penalized. Lets say if your algorithm scores 25% on generalization data then your deviation will be 2% which will be reported.*
 	
