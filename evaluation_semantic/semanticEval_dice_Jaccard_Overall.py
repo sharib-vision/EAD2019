@@ -17,7 +17,7 @@ def file_lines_to_list(path):
   content = [x.strip() for x in content]
   return content
 
-def calculate_confusion_matrix_from_arrays(prediction, ground_truth, nr_labels):
+def calculate_confusion_matrix_from_arrays(ground_truth, predictions, nr_labels):
     replace_indices = np.vstack((ground_truth.flatten(),prediction.flatten())).T
     confusion_matrix, _ = np.histogramdd(replace_indices, bins=(nr_labels, nr_labels),range=[(0, nr_labels), (0, nr_labels)])
     confusion_matrix = confusion_matrix.astype(np.uint32)
