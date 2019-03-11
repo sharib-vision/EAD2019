@@ -431,7 +431,7 @@ my_dictionary = {
               "value":       (mIoU*100)
             },
             "score":{
-              "value":      (0.8*mAP*100+0.2*mIoU*100),  
+              "value":      (0.6*mAP*100+0.4*mIoU*100),  
             },
             "mAP_specularity": {
               "value": (ap_dictionary['specularity']*100)
