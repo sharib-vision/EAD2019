@@ -18,7 +18,7 @@ def file_lines_to_list(path):
   return content
 
 def calculate_confusion_matrix_from_arrays(ground_truth, predictions, nr_labels):
-    replace_indices = np.vstack((ground_truth.flatten(),prediction.flatten())).T
+    replace_indices = np.vstack((ground_truth.flatten(),predictions.flatten())).T
     confusion_matrix, _ = np.histogramdd(replace_indices, bins=(nr_labels, nr_labels),range=[(0, nr_labels), (0, nr_labels)])
     confusion_matrix = confusion_matrix.astype(np.uint32)
     return confusion_matrix
@@ -75,8 +75,8 @@ def get_args():
     
     import argparse
     parser = argparse.ArgumentParser(description="For EAD2019 challenge: semantic segmentation", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--GT_maskDIR", type=str, default="../../semantic_masks/", help="ground truth mask image (5 channel tif image only)")
-    parser.add_argument("--Eval_maskDIR", type=str, default="../../semantic_masks/", help="predicted mask image (5 channel tif image only)")
+    parser.add_argument("--GT_maskDIR", type=str, default="../groundTruths_EAD2019/semantic_masks/", help="ground truth mask image (5 channel tif image only)")
+    parser.add_argument("--Eval_maskDIR", type=str, default="../semantic_masks_participant/", help="predicted mask image (5 channel tif image only)")
     parser.add_argument("--Result_dir", type=str, default="results", help="predicted mask image (5 channel tif image only)")
     parser.add_argument("--jsonFileName", type=str, default='metrics_semantic.json', help="predicted mask image (5 channel tif image only)")
     args = parser.parse_args()
@@ -116,11 +116,15 @@ if __name__ == '__main__':
                 #
                 confusion_matrix = calculate_confusion_matrix_from_arrays(y_true, y_pred, 2)
                 dice_= calculate_dice(confusion_matrix)
-                _, f2_score=calculate_iou(confusion_matrix)   
+                iou, f2_score=calculate_iou(confusion_matrix)   
                 
                 dice_val.append(result_dice)
                 jaccard_val.append(result_jaccard)
-                f2_val.append(f2_score)
+                
+                # if bckgnd is 1 that means no object in foregnd is available for segmentation
+                if f2_score[0] == 1 and f2_score[1] ==0:
+                    f2_score[1] = 1
+                f2_val.append(f2_score[1])
                 
             storeDicePerImage.append(np.mean(dice_val))
             storeJaccardPerImage.append(np.mean(jaccard_val))
