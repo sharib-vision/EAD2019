@@ -19,7 +19,7 @@ import numpy as np
 
 MINOVERLAP = 0.25 # default value 
 
-debug = 1
+debug = 0
 # fetch the folders 
 if debug:
     predictfolder ='../mAP-IoU_testdata/predicted'
@@ -424,56 +424,59 @@ import os
 # Please comment this!!!! as this example did not have instrument detection we have to keep this value
 
 # write result only for anything above 40 % of mAP
-#mIoU = 1.4*mAP
-
+ratioPass = 0
 if mIoU <= 1.30 * mAP:
-    my_dictionary = {
-        "EADChallenge2019":{
-                "mAP":{
-                 "value":   (mAP*100)
-                },
-                "IoU":{
-                  "value":       (mIoU*100)
-                },
-                "score":{
-                  "value":      (0.6*mAP*100+0.4*mIoU*100),
-                },
-                "mAP_specularity": {
-                  "value": (ap_dictionary['specularity']*100)
-                },
-                "mAP_contrast": {
-                  "value": (ap_dictionary['contrast']*100)
-                },
-                "mAP_saturation": {
-                  "value": (ap_dictionary['saturation']*100)
-                },
-                "mAP_blur":{
-                  "value": (ap_dictionary['blur']*100)
-                },
-                "mAP_instrument":{
-                  "value": (ap_dictionary['instrument']*100)
-                },
-                "mAP_bubbles":{
-                  "value": (ap_dictionary['bubbles']*100)
-                },
-                "mAP_artifact":{
-                  "value": (ap_dictionary['artifact']*100)
-                }
+    ratioPass = 1
+
+my_dictionary = {
+    "EADChallenge2019":{
+            "mAP":{
+             "value":   (mAP*100)
+            },
+            "IoU":{
+              "value":       (mIoU*100)
+            },
+            "score":{
+              "value":      (0.6*mAP*100+0.4*mIoU*100),
+            },
+            "mAP_specularity": {
+              "value": (ap_dictionary['specularity']*100)
+            },
+            "mAP_contrast": {
+              "value": (ap_dictionary['contrast']*100)
+            },
+            "mAP_saturation": {
+              "value": (ap_dictionary['saturation']*100)
+            },
+            "mAP_blur":{
+              "value": (ap_dictionary['blur']*100)
+            },
+            "mAP_instrument":{
+              "value": (ap_dictionary['instrument']*100)
+            },
+            "mAP_bubbles":{
+              "value": (ap_dictionary['bubbles']*100)
+            },
+            "mAP_artifact":{
+              "value": (ap_dictionary['artifact']*100)
+            },
+            "IoU_mAP_ratio":{
+            "value": (ratioPass),
             }
-    }
+        }
+}
 
-    jsonFileName=os.path.join(resultsfolder, jsonFileName)
+jsonFileName=os.path.join(resultsfolder, jsonFileName)
 
-    try:
-        os.remove(jsonFileName)
-    except OSError:
-        pass
+try:
+    os.remove(jsonFileName)
+except OSError:
+    pass
 
-    fileObj= open(jsonFileName, "w+")
-    json.dump(my_dictionary, fileObj)
-    fileObj.close()
-else:
-    print('IoU is too high than mAP (deviation  of 35 perc. exceeded), no file written, val_IoU_mAP_checker value (in percent):', (np.fabs(mIoU-mAP)/mAP)*100 )
+fileObj= open(jsonFileName, "w+")
+json.dump(my_dictionary, fileObj)
+fileObj.close()
+
 
 
 
