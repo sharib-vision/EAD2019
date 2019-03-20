@@ -66,6 +66,7 @@ if __name__ == '__main__':
             mAP_d = valAppend[0]['value']*0.01
             IOU_d = valAppend[1]['value']*0.01
             score_d = valAppend[2]['value']*0.01
+            ratioPass = int(valAppend[10]['value'])
         
     """ case: Semantic """
     if valArgs.caseType == 1 or valArgs.caseType == 3 or valArgs.caseType == 5:
@@ -83,13 +84,13 @@ if __name__ == '__main__':
                 print ('overall score for instance segmentation for EAD2019 challenge is:', finalScore)
                 print('~~~~~~~~~~~~~~~Complimentary informations~~~~~~~~~~~~~~~')
                 print('number of semantic samples:', len(data))
-                print('mean mAP alone:', valAppend[0]['value']*0.01)
                 print('mean semantic score alone:', scoreSemantic)
                 print('~~~~~~~~~~~~~~~~~~~~~~E.O.F~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         
             F2_score = valAppend_Semantic[2]['value']
             overlap = scoreSemantic
             semScore = finalScore
+            ratioPass = 0
                 
             """ case: Generalization """
     if  valArgs.caseType == 3 or valArgs.caseType == 4:
@@ -140,9 +141,11 @@ if __name__ == '__main__':
                   "value": (mAP_g)
                 },
                 "dev_g":{
-                  "value": (score_g),  
+                  "value": (score_g)
+                },
+                "ratioPass":{
+                    "value": (ratioPass),
                 }
-                
             }
     }   
                 
