@@ -60,7 +60,10 @@ if __name__ == '__main__':
             valAppend_gen.append(p)
         
         mAP_d=valAppend_det[0]['value']*0.01
+        
         mAP_g=valAppend_gen[0]['value']*0.01
+        iou_g=valAppend_gen[1]['value']*0.01
+
         # tolerance limit of 10% is provided
         tol_limit = 5
         for i in range (1, 8):
@@ -81,6 +84,9 @@ if __name__ == '__main__':
                     "mAP_g":{
                      "value":(mAP_g) 
                     },
+                    "iou_g":{
+                            "value":(iou_g)
+                        },
                     "score_g":{
                       "value": (meanDeviation),  
                     } 

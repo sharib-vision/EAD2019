@@ -19,13 +19,14 @@ import numpy as np
 
 MINOVERLAP = 0.25 # default value 
 
-debug = 0
+debug = 1
 # fetch the folders 
 if debug:
+#    predictfolder ='../mAP-IoU_testdata/predicted'
     predictfolder ='../mAP-IoU_testdata/predicted'
     gtfolder ='../mAP-IoU_testdata/ground-truth'
     
-    predictfolder ='../detection_bbox/detection_bbox'
+    predictfolder ='../27805_pro85/detection_bbox'
     gtfolder ='../groundTruths_EAD2019/detection_bbox'
     resultsfolder ='../mAP-IoU_testdata/results'
     jsonFileName = 'detection_test_emptyPredictions.json'
@@ -459,6 +460,27 @@ my_dictionary = {
             },
             "mAP_artifact":{
               "value": (ap_dictionary['artifact']*100)
+            },
+                "iou_specularity": {
+                    "value": (iou_dictionary['specularity']*100)
+                },
+    "iou__contrast": {
+        "value": (iou_dictionary['contrast']*100)
+            },
+            "iou_saturation": {
+                "value": (iou_dictionary['saturation']*100)
+            },
+            "iou_blur":{
+                "value": (iou_dictionary['blur']*100)
+            },
+            "iou_instrument":{
+                "value": (iou_dictionary['instrument']*100)
+            },
+            "iou_bubbles":{
+                "value": (iou_dictionary['bubbles']*100)
+},
+    "iou_artifact":{
+        "value": (iou_dictionary['artifact']*100)
             },
             "IoU_mAP_ratio":{
             "value": (ratioPass),
