@@ -5,6 +5,17 @@ Created on Wed Jun 13 10:52:32 2018
 
 @author:  ead2019
 """
+def process_image(image_data):
+    image = cv2.imread(image_data.image_path)
+    image = cv2.putText(image, image_data.image_name, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+    for ann in image_data.annotations:
+        box_color = (0, 255, 0)  #Green
+        if ann.difficult or ann.truncated:
+            box_color = (0, 0, 255) #Red
+        image = cv2.rectangle(image, (ann.xmin, ann.ymin), (ann.xmax, ann.ymax), box_color, args.line_thickness)
+        image = cv2.putText(image, ann.name, (ann.xmin, ann.ymin), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+    return image
+
 
 def locate_files(infolder, ext='.txt'):
 
@@ -105,10 +116,23 @@ def convert_boxes(boxes, class_names, datatype, imgshape):
 
             if bbox_bounds.max() < 1.1:
                 # yolo:
-                x1 = (bbox_bounds[0] - bbox_bounds[2]) / 2. * ncols
-                y1 = (bbox_bounds[1] - bbox_bounds[3]) / 2. * nrows
-                x2 = (bbox_bounds[0] + bbox_bounds[2]) / 2. * ncols
-                y2 = (bbox_bounds[1] + bbox_bounds[3]) / 2. * nrows
+#                x1 = (bbox_bounds[0] - bbox_bounds[2]) / 2. * ncols
+#                y1 = (bbox_bounds[1] - bbox_bounds[3]) / 2. * nrows
+#                x2 = (bbox_bounds[0] + bbox_bounds[2]) / 2. * ncols
+#                y2 = (bbox_bounds[1] + bbox_bounds[3]) / 2. * nrows
+                                
+                # yolo 2 voc
+                x = bbox_bounds[0] * ncols
+                w = bbox_bounds[2] * ncols
+                
+                y = bbox_bounds[1] * nrows
+                h = bbox_bounds[3] * nrows
+                
+                x1 = x - w/2
+                x2 = x + w/2
+                y1 = y - h/2
+                y2 = y + h/2
+       
             else:
                 # assume voc:
                 x1,y1,x2,y2 = bbox_bounds
@@ -135,6 +159,17 @@ def convert_boxes(boxes, class_names, datatype, imgshape):
     else:
         return data
 
+
+class_rgb = [
+    (0, 0, 255), (255, 0, 0), (0, 255, 0), (255, 255, 0), (0, 255, 255),
+    (255, 0, 255), (192, 192, 192), (128, 128, 128), (128, 0, 0),
+    (128, 128, 0), (0, 128, 0), (128, 0, 128), (0, 128, 128), (0, 0, 128)]
+import numpy as np
+class_rgb = np.array(class_rgb)
+
+
+classListBBOX=['specularity', 'saturation', 'artifact', 'blur', 'contrast', 'bubbles', 'instrument', 'blood']
+
 if __name__=="__main__":
 
     import numpy as np
@@ -143,11 +178,11 @@ if __name__=="__main__":
     import os
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-baseImgFolder', action='store', help='please include the full path of the folder of the images', type=str)
-    parser.add_argument('-baseBoxFolder', action='store', help='please include the full path of the folder of the bounding boxes', type=str)
-    parser.add_argument('-pathToClassNames', action='store', help='please include the full path to the class names file', type=str)
-    parser.add_argument('-outFolder', action='store', help='please include the full path to the output folder for saving converted bounding boxes', type=str)
-    parser.add_argument('-datatype', action='store', help='please enter \'GT\' if bounding boxes are ground truth or \'Pred\' if boxes have been predicted', type=str)
+    parser.add_argument('-baseImgFolder',default='/Users/shariba/development/challenge2020/EndoCV-EAD2020-test/EAD2020_testData/Detection/detection_test_EAD2020/', action='store', help='please include the full path of the folder of the images', type=str)
+    parser.add_argument('-baseBoxFolder',default='/Users/shariba/development/challenge2020/EndoCV-EAD2020-test/EAD2020_testData/Detection/bbox_detection_test_EAD2020/', action='store', help='please include the full path of the folder of the bounding boxes', type=str)
+    parser.add_argument('-pathToClassNames', default='../endo.names',action='store', help='please include the full path to the class names file', type=str)
+    parser.add_argument('-outFolder', default= 'tmp', action='store', help='please include the full path to the output folder for saving converted bounding boxes', type=str)
+    parser.add_argument('-datatype', default= 'GT', action='store', help='please enter \'GT\' if bounding boxes are ground truth or \'Pred\' if boxes have been predicted', type=str)
     args = parser.parse_args()
 
     """
@@ -171,14 +206,32 @@ if __name__=="__main__":
     imgpaths = np.hstack([(boxfile.replace(args.baseBoxFolder, args.baseImgFolder)).replace('.txt', '.jpg') for boxfile in boxpaths])
     savepaths = np.hstack([(boxfile.replace(args.baseBoxFolder, args.outFolder)) for boxfile in boxpaths])
     
+    debug = 0
+    
+    import cv2
     for ii, imgpath in enumerate(imgpaths):
         # print(ii, imgpath)
         img = read_img(imgpath)
+        image= cv2.imread(imgpath)
         nrows, ncols, _ = img.shape
         boxes = read_boxes(boxpaths[ii]) # read in boxes
 
         # check boxes, is it yolo or is it voc already?
         boxes_voc = convert_boxes(boxes, class_names, args.datatype, imgshape=(nrows, ncols))
+        
+        if debug:
+            for i in range (0, len(boxes_voc)):
+                for l in range (0, len(classListBBOX)):
+                    if boxes_voc[i][0]== classListBBOX[l]:
+                        color = class_rgb[l].tolist()
+                        cv2.rectangle(image, (int(boxes_voc[i][1]), int(boxes_voc[i][2])), (int(boxes_voc[i][3]), int(boxes_voc[i][4])), color)
 
-        # write out.
-        write_boxes_voc(boxes_voc, savepaths[ii])
+            if imgpath.split('/')[-1]=='ead2020_testD_0129.jpg':
+                cv2.imshow("test", image)
+                cv2.waitKey(50)
+            
+        else:
+            write_boxes_voc(boxes_voc, savepaths[ii])
+        
+        # check the image overlay for some samples
+        
